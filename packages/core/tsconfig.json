@@ -15,15 +15,35 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "outDir": "dist",
     // Best practices
     "strict": true,
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
+    "types": [
+      "bun"
+    ],
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
-  }
+    "noPropertyAccessFromIndexSignature": false,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

@@ -1,11 +1,50 @@
 {
-  "name": "@awwwkshay/core",
+  "name": "@bun-monorepo/core",
   "module": "index.ts",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./db": {
+      "types": "./dist/db/index.d.ts",
+      "import": "./dist/db/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas/index.d.ts",
+      "import": "./dist/schemas/index.js"
+    },
+    "./services": {
+      "types": "./dist/services/index.d.ts",
+      "import": "./dist/services/index.js"
+    }
+  },
+  "scripts": {
+    "migrations:generate": "bunx drizzle-kit generate",
+    "migrations:up": "bunx drizzle-kit migrate",
+    "migrations:down": "bunx drizzle-kit drop",
+    "db:studio": "bunx drizzle-kit studio",
+    "db:sync": "bunx drizzle-kit push",
+    "build:types": "bunx tsc --project tsconfig.json --noEmit false",
+    "build": "bun run build:types && bun build src/index.ts --outdir=dist --format=esm --target=bun"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.21.0"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.0",
+    "drizzle-orm": "^0.45.2",
+    "drizzle-zod": "^0.8.3",
+    "pg": "^8.20.0",
+    "zod": "4.3.6"
   }
 }

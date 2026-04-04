@@ -24,6 +24,14 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
+    "noPropertyAccessFromIndexSignature": false,
+    "paths": {
+      "@bun-monorepo/core": [
+        "./packages/core/src/index.ts"
+      ],
+      "@bun-monorepo/core/*": [
+        "./packages/core/src/*"
+      ]
+    }
   }
 }
