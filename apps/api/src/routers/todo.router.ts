@@ -1,11 +1,11 @@
 import { createRouteDef, deleteRouteDef, readAllRouteDef, readByIdRouteDef, updateRouteDef } from "@/openapi-docs";
 import { TodoService} from "@bun-monorepo/core"
 import { OpenAPIHono, z } from '@hono/zod-openapi'
+import { db } from "@/db"
 
 export const todoRouter = new OpenAPIHono();
 
-
-const todoService = new TodoService();
+const todoService = new TodoService(db);
 
 
 todoRouter.openapi(readAllRouteDef, async (c) => {
