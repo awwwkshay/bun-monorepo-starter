@@ -14,8 +14,7 @@
     "build": "bun run build.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "tsx": "^4.21.0"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"
