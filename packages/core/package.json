@@ -8,18 +8,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./db": {
-      "types": "./dist/db/index.d.ts",
-      "import": "./dist/db/index.js"
-    },
-    "./schemas": {
-      "types": "./dist/schemas/index.d.ts",
-      "import": "./dist/schemas/index.js"
-    },
-    "./services": {
-      "types": "./dist/services/index.d.ts",
-      "import": "./dist/services/index.js"
     }
   },
   "scripts": {
@@ -28,12 +16,10 @@
     "migrations:down": "bunx drizzle-kit drop",
     "db:studio": "bunx drizzle-kit studio",
     "db:sync": "bunx drizzle-kit push",
-    "build:types": "bunx tsc --project tsconfig.json --noEmit false",
-    "build": "bun run build:types && bun build src/index.ts --outdir=dist --format=esm --target=bun"
+    "build": "bun run build.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/pg": "^8.20.0",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.21.0"
   },
@@ -44,7 +30,6 @@
     "dotenv": "^17.4.0",
     "drizzle-orm": "^0.45.2",
     "drizzle-zod": "^0.8.3",
-    "pg": "^8.20.0",
     "zod": "4.3.6"
   }
 }
