@@ -1,5 +1,5 @@
 import { createRouteDef, deleteRouteDef, readAllRouteDef, readByIdRouteDef, updateRouteDef } from "@/openapi-docs";
-import { TodoService} from "@bun-monorepo/core"
+import { TodoService } from "@bun-monorepo/application"
 import { OpenAPIHono, z } from '@hono/zod-openapi'
 import { db } from "@/db"
 

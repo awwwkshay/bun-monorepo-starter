@@ -1,5 +1,5 @@
-import {  todoModel } from "@/models";
-import type { ITodoInsert, ITodo, ITodoUpdate } from "@/schemas/todo.schema";
+import { todoModel } from "@bun-monorepo/core";
+import type { ITodoInsert, ITodo, ITodoUpdate } from "@bun-monorepo/core";
 import { eq } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
