@@ -1,11 +1,15 @@
-import { Hono } from "hono";
+import { cors } from 'hono/cors'
 import { todoRouter } from "./routers/todo.router";
 import { Scalar } from "@scalar/hono-api-reference";
 import { OpenAPIHono, z } from "@hono/zod-openapi";
 
-const app = new OpenAPIHono({
+const app = new OpenAPIHono({})
 
-})
+app.use('*', cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+}))
 
 app.onError((err, c) => {
   console.error("Global error handler caught:", err);

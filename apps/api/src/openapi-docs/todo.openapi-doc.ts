@@ -1,4 +1,4 @@
-import { todoCreateRequestBodySchema, todoCreateResponseSchema, todoReadAllApiResponseSchema, todoReadByIdApiResponseSchema, todoReadByIdRequestParamsSchema } from "@/schemas";
+import { todoCreateRequestBodySchema, todoCreateResponseSchema, todoReadAllApiResponseSchema, todoReadByIdApiResponseSchema, todoReadByIdRequestParamsSchema, todoUpdateRequestBodySchema } from "@/schemas";
 import { createRoute, z } from "@hono/zod-openapi";
 
 export const readAllRouteDef = createRoute({
@@ -67,7 +67,7 @@ export const updateRouteDef = createRoute({
         body: {
             content: {
                 "application/json": {
-                    schema: todoCreateRequestBodySchema
+                    schema: todoUpdateRequestBodySchema
                 }
             }
         }
