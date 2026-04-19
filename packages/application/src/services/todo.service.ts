@@ -5,7 +5,6 @@ import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 export class TodoService<TDatabase extends NodePgDatabase<Record<string, unknown>>> {
     constructor(private database: TDatabase) {
-        this.database = database;
     }
 
     async createTodo(createDto: ITodoInsert): Promise<ITodo> {

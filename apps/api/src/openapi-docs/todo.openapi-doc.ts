@@ -1,5 +1,5 @@
 import { todoCreateRequestBodySchema, todoCreateResponseSchema, todoReadAllApiResponseSchema, todoReadByIdApiResponseSchema, todoReadByIdRequestParamsSchema, todoUpdateRequestBodySchema } from "@/schemas";
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 
 export const readAllRouteDef = createRoute({
     method: "get",
@@ -51,7 +51,7 @@ export const readByIdRouteDef = createRoute({
         200: {
             content: {
                 "application/json": {
-                    schema: todoReadByIdApiResponseSchema
+                    schema: todoReadByIdApiResponseSchema.nullish()
                 }
             },
             description: "Read a todo by id"

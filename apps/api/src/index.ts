@@ -1,5 +1,5 @@
 import { cors } from 'hono/cors'
-import { todoRouter } from "./routers/todo.router";
+import { todoRouter } from "./routers";
 import { Scalar } from "@scalar/hono-api-reference";
 import { OpenAPIHono, z } from "@hono/zod-openapi";
 
@@ -35,7 +35,7 @@ app.doc('/openapi', {
 
 app.get(
   '/scalar',
-  Scalar((c) => {
+  Scalar(() => {
     return {
       url: '/openapi',
       favicon: '',

@@ -3,5 +3,5 @@ import z from "zod";
 
 export const createApiResponseSchema = <TData extends ZodType,>(dataSchema: TData) => z.object({
     message: z.string(),
-    data: dataSchema.nullish().default(null),
+    data: dataSchema.nullish(),
 })
