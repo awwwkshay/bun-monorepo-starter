@@ -14,4 +14,4 @@ WORKDIR /app/apps/web
 RUN bun run build
 
 EXPOSE 3000
-CMD ["bun", "run", "preview"]
+CMD ["bun", "run", "preview", "--", "--host", "--port", "3000"]

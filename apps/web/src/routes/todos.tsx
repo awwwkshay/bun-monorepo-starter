@@ -3,7 +3,7 @@ import type { ITodo } from '@bun-monorepo/core'
 import { useState, useEffect, useMemo } from 'react'
 import { Button, Checkbox, Input } from '@/components/ui'
 
-const API_BASE = 'http://localhost:8000/todos'
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/todos`
 
 export const Route = createFileRoute('/todos')({
   component: TodosPage,

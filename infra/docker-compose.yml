@@ -9,24 +9,24 @@ services:
       POSTGRES_DB: app
     volumes:
       - ../.pg_data:/var/lib/postgresql/data
-  web:
-    build:
-      context: ..
-      dockerfile: apps/web/Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/app"
-    depends_on:
-      - postgres
-      - api
   api:
     build:
       context: ..
       dockerfile: apps/api/Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/app"
+    env_file:
+      - ../apps/api/.env.docker
     depends_on:
       - postgres
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ../apps/web/.env.docker
+    depends_on:
+      - postgres
+      - api
