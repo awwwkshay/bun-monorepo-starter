@@ -4,17 +4,23 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
     "lint": "oxlint",
-    "lint:fix": "oxlint --fix"
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt .",
+    "format:check": "oxfmt . --check"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0"
+    "oxlint": "^1.60.0",
+    "turbo": "^2.9.6"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
+  "packageManager": "bun@1.0.0",
   "workspaces": [
     "packages/*",
     "apps/*"
