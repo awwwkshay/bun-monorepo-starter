@@ -1,12 +1,21 @@
 {
   "name": "api",
-  "module": "index.ts",
-  "type": "module",
   "private": true,
+  "type": "module",
+  "module": "index.ts",
   "scripts": {
     "dev": "bun --hot run src/index.ts",
     "build": "bun build src/index.ts --outdir=dist --format=esm --target=bun",
     "start": "bun run dist/index.js"
+  },
+  "dependencies": {
+    "@hono/zod-openapi": "^1.2.4",
+    "@scalar/hono-api-reference": "^0.10.6",
+    "dotenv": "^17.4.0",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.10",
+    "pg": "^8.20.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@bun-monorepo/application": "workspace:*",
@@ -17,14 +26,5 @@
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "dependencies": {
-    "@hono/zod-openapi": "^1.2.4",
-    "@scalar/hono-api-reference": "^0.10.6",
-    "dotenv": "^17.4.0",
-    "drizzle-orm": "^0.45.2",
-    "hono": "^4.12.10",
-    "pg": "^8.20.0",
-    "zod": "^4.3.6"
   }
 }

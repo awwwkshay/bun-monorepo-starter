@@ -1,122 +1,126 @@
-import { createFileRoute } from '@tanstack/react-router'
-import type { ITodo } from '@bun-monorepo/core'
-import { useState, useEffect, useMemo } from 'react'
-import { Button, Checkbox, Input } from '@/components/ui'
+import { createFileRoute } from "@tanstack/react-router";
+import type { ITodo } from "@bun-monorepo/core";
+import { useState, useEffect, useMemo } from "react";
+import { Button, Checkbox, Input } from "@/components/ui";
 
-const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/todos`
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/todos`;
 
-export const Route = createFileRoute('/todos')({
+export const Route = createFileRoute("/todos")({
   component: TodosPage,
-})
+});
 
 function TodosPage() {
-  const [todos, setTodos] = useState<ITodo[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [newTitle, setNewTitle] = useState('')
-  const [newDescription, setNewDescription] = useState('')
-  const [creating, setCreating] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [editTitle, setEditTitle] = useState('')
-  const [editDescription, setEditDescription] = useState('')
+  const [todos, setTodos] = useState<ITodo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
 
   useEffect(() => {
-    const controller = new AbortController()
+    const controller = new AbortController();
 
     async function fetchTodos() {
       try {
-        const res = await fetch(API_BASE, { signal: controller.signal })
-        const json = await res.json()
-        setTodos(json.data ?? [])
+        const res = await fetch(API_BASE, { signal: controller.signal });
+        const json = await res.json();
+        setTodos(json.data ?? []);
       } catch (err) {
-        if (err instanceof Error && err.name === 'AbortError') return
-        setError('Failed to load todos.')
+        if (err instanceof Error && err.name === "AbortError") return;
+        setError("Failed to load todos.");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 
-    fetchTodos()
-    return () => controller.abort()
-  }, [])
+    fetchTodos();
+    return () => controller.abort();
+  }, []);
 
   async function createTodo(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const title = newTitle.trim()
-    if (!title) return
-    setCreating(true)
+    e.preventDefault();
+    const title = newTitle.trim();
+    if (!title) return;
+    setCreating(true);
     try {
       const res = await fetch(API_BASE, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, description: newDescription.trim() || undefined }),
-      })
-      const json = await res.json()
-      setTodos((prev) => [...prev, json.data])
-      setNewTitle('')
-      setNewDescription('')
+      });
+      const json = await res.json();
+      setTodos((prev) => [...prev, json.data]);
+      setNewTitle("");
+      setNewDescription("");
     } catch {
-      setError('Failed to create todo.')
+      setError("Failed to create todo.");
     } finally {
-      setCreating(false)
+      setCreating(false);
     }
   }
 
   async function toggleComplete(todo: ITodo) {
     try {
       const res = await fetch(`${API_BASE}/${todo.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isCompleted: !todo.isCompleted }),
-      })
-      const json = await res.json()
-      setTodos((prev) => prev.map((t) => (t.id === todo.id ? json.data : t)))
+      });
+      const json = await res.json();
+      setTodos((prev) => prev.map((t) => (t.id === todo.id ? json.data : t)));
     } catch {
-      setError('Failed to update todo.')
+      setError("Failed to update todo.");
     }
   }
 
   function startEdit(todo: ITodo) {
-    setEditingId(todo.id)
-    setEditTitle(todo.title)
-    setEditDescription(todo.description ?? '')
+    setEditingId(todo.id);
+    setEditTitle(todo.title);
+    setEditDescription(todo.description ?? "");
   }
 
   async function saveEdit(id: string) {
-    const title = editTitle.trim()
-    if (!title) return
+    const title = editTitle.trim();
+    if (!title) return;
     try {
       const res = await fetch(`${API_BASE}/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, description: editDescription.trim() || undefined }),
-      })
-      const json = await res.json()
-      setTodos((prev) => prev.map((t) => (t.id === id ? json.data : t)))
-      setEditingId(null)
+      });
+      const json = await res.json();
+      setTodos((prev) => prev.map((t) => (t.id === id ? json.data : t)));
+      setEditingId(null);
     } catch {
-      setError('Failed to update todo.')
+      setError("Failed to update todo.");
     }
   }
 
   async function deleteTodo(id: string) {
     try {
-      await fetch(`${API_BASE}/${id}`, { method: 'DELETE' })
-      setTodos((prev) => prev.filter((t) => t.id !== id))
+      await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
+      setTodos((prev) => prev.filter((t) => t.id !== id));
     } catch {
-      setError('Failed to delete todo.')
+      setError("Failed to delete todo.");
     }
   }
 
   const { pendingCount, completedCount, sortedTodos } = useMemo(() => {
-    const pending: ITodo[] = []
-    const completed: ITodo[] = []
+    const pending: ITodo[] = [];
+    const completed: ITodo[] = [];
     for (const t of todos) {
-      if (t.isCompleted) completed.push(t)
-      else pending.push(t)
+      if (t.isCompleted) completed.push(t);
+      else pending.push(t);
     }
-    return { pendingCount: pending.length, completedCount: completed.length, sortedTodos: [...pending, ...completed] }
-  }, [todos])
+    return {
+      pendingCount: pending.length,
+      completedCount: completed.length,
+      sortedTodos: [...pending, ...completed],
+    };
+  }, [todos]);
 
   return (
     <main className="page-wrap px-4 py-10">
@@ -156,11 +160,8 @@ function TodosPage() {
               onChange={(e) => setNewDescription(e.target.value)}
             />
           </div>
-          <Button
-            type="submit"
-            disabled={creating || !newTitle.trim()}
-          >
-            {creating ? 'Adding…' : 'Add Todo'}
+          <Button type="submit" disabled={creating || !newTitle.trim()}>
+            {creating ? "Adding…" : "Add Todo"}
           </Button>
         </div>
       </form>
@@ -187,7 +188,6 @@ function TodosPage() {
                     type="text"
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
-
                   />
                   <Input
                     type="text"
@@ -196,16 +196,8 @@ function TodosPage() {
                     placeholder="Description (optional)"
                   />
                   <div className="flex gap-2">
-                    <Button
-                      onClick={() => saveEdit(todo.id)}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      onClick={() => setEditingId(null)}
-                    >
-                      Cancel
-                    </Button>
+                    <Button onClick={() => saveEdit(todo.id)}>Save</Button>
+                    <Button onClick={() => setEditingId(null)}>Cancel</Button>
                   </div>
                 </div>
               ) : (
@@ -213,15 +205,19 @@ function TodosPage() {
                   <Checkbox
                     checked={todo.isCompleted}
                     onCheckedChange={() => toggleComplete(todo)}
-                    aria-label={todo.isCompleted ? 'Mark incomplete' : 'Mark complete'}
+                    aria-label={todo.isCompleted ? "Mark incomplete" : "Mark complete"}
                   />
 
                   <div className="flex-1 min-w-0">
-                    <p className={`text-sm font-semibold text-(--sea-ink) ${todo.isCompleted ? 'line-through opacity-50' : ''}`}>
+                    <p
+                      className={`text-sm font-semibold text-(--sea-ink) ${todo.isCompleted ? "line-through opacity-50" : ""}`}
+                    >
                       {todo.title}
                     </p>
                     {todo.description && (
-                      <p className={`mt-0.5 text-xs text-(--sea-ink-soft) ${todo.isCompleted ? 'line-through opacity-40' : ''}`}>
+                      <p
+                        className={`mt-0.5 text-xs text-(--sea-ink-soft) ${todo.isCompleted ? "line-through opacity-40" : ""}`}
+                      >
                         {todo.description}
                       </p>
                     )}
@@ -234,7 +230,13 @@ function TodosPage() {
                       aria-label="Edit"
                     >
                       <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
-                        <path d="M11.5 2.5l2 2-9 9H2.5v-2l9-9z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path
+                          d="M11.5 2.5l2 2-9 9H2.5v-2l9-9z"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </Button>
                     <Button
@@ -244,7 +246,13 @@ function TodosPage() {
                       className="rounded-lg p-1.5 text-(--sea-ink-soft) transition hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/30"
                     >
                       <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
-                        <path d="M3 4h10M6 4V2h4v2M5 4v9a1 1 0 001 1h4a1 1 0 001-1V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path
+                          d="M3 4h10M6 4V2h4v2M5 4v9a1 1 0 001 1h4a1 1 0 001-1V4"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </Button>
                   </div>
@@ -255,5 +263,5 @@ function TodosPage() {
         </div>
       )}
     </main>
-  )
+  );
 }

@@ -1,1 +1,1 @@
-export * from "./todo.openapi-doc"
+export * from "./todo.openapi-doc";

@@ -1,10 +1,13 @@
 import { build, Glob } from "bun";
 
 // Generate type declarations via tsc
-const tsc = Bun.spawn(["bunx", "tsc", "--project", "tsconfig.json", "--noEmit", "false"], {
-  stdout: "inherit",
-  stderr: "inherit",
-});
+const tsc = Bun.spawn(
+  ["bunx", "tsc", "--project", "tsconfig.json", "--noEmit", "false"],
+  {
+    stdout: "inherit",
+    stderr: "inherit",
+  },
+);
 const tscExitCode = await tsc.exited;
 if (tscExitCode !== 0) {
   console.error("Type generation failed");

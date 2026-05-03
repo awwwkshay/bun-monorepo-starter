@@ -1,5 +1,5 @@
-import { Link } from '@tanstack/react-router'
-import { ThemeToggle } from './theme-toggle'
+import { Link } from "@tanstack/react-router";
+import { ThemeToggle } from "./theme-toggle";
 
 export const Header = () => {
   return (
@@ -52,21 +52,21 @@ export const Header = () => {
           <Link
             to="/"
             className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
+            activeProps={{ className: "nav-link is-active" }}
           >
             Home
           </Link>
           <Link
             to="/about"
             className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
+            activeProps={{ className: "nav-link is-active" }}
           >
             About
           </Link>
           <Link
             to="/todos"
             className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
+            activeProps={{ className: "nav-link is-active" }}
           >
             Todos
           </Link>
@@ -81,5 +81,5 @@ export const Header = () => {
         </div>
       </nav>
     </header>
-  )
-}
+  );
+};

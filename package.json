@@ -1,8 +1,12 @@
 {
   "name": "bun-mono",
-  "module": "index.ts",
-  "type": "module",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "type": "module",
+  "module": "index.ts",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
@@ -20,9 +24,5 @@
   "peerDependencies": {
     "typescript": "^5"
   },
-  "packageManager": "bun@1.0.0",
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
+  "packageManager": "bun@1.0.0"
 }

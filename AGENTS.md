@@ -120,7 +120,7 @@ This is a modern monorepo managed with **Bun**, designed for high-performance de
 1. **Bun First**: Default to Bun built-ins (`Bun.serve`, `Bun.sql` etc.) over Node-specific equivalents.
 2. **Absolute Paths**: Always use absolute paths when interacting with the file system through tools.
 3. **Consistency**: Maintain existing patterns (no semicolons, PascalCase components).
-5. **No Vite for Pure Bun**: In non-`web` apps, use `Bun.serve()` if a backend is needed, avoiding Vite.
+4. **No Vite for Pure Bun**: In non-`web` apps, use `Bun.serve()` if a backend is needed, avoiding Vite.
 
 ## 7. External Tool Integration
 
@@ -128,4 +128,5 @@ This is a modern monorepo managed with **Bun**, designed for high-performance de
 - **Copilot Rules**: No project-specific `.github/copilot-instructions.md` found. Follow the mandates in this file.
 
 ---
-*Created on: Fri Apr 03 2026. Updated for comprehensive agent guidance.*
+
+_Created on: Fri Apr 03 2026. Updated for comprehensive agent guidance._
